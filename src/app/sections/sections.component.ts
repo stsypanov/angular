@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Observable";
+import {DragulaService} from "ng2-dragula";
 
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -21,7 +22,7 @@ export class SectionsComponent implements OnInit {
   sectionChanged: EventEmitter<string> =
     new EventEmitter<string>();
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private dragulaService: DragulaService) {
   }
 
   addSection(newSection: HTMLInputElement) {
@@ -59,9 +60,20 @@ export class SectionsComponent implements OnInit {
       .map(response => response.json() as Section[]);
   }
 
+  onDrop(value) {
+    let [bag, elementMoved, targetContainer, srcContainer] = value;
+    if (targetContainer.children) {
+      let arr = Array.from(targetContainer.children);
+      this.sections = arr.map((li: HTMLLIElement) => {
+        return {title: li.textContent.trim()}
+      });
+      this.writeSections().subscribe();
+    }
+  }
 
   ngOnInit() {
     this.readSections();
+    this.dragulaService.drop.subscribe(this.onDrop.bind(this));
   }
 
 }

@@ -24,7 +24,9 @@
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "dragula": "^3.7.2",
+    "ng2-dragula": "^1.2.2-0"
   },
   "devDependencies": {
     "@angular/cli": "1.2.0",

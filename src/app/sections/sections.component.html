@@ -7,7 +7,7 @@
 
 <input type="text" class="form-control" placeholder="Section filter" #filter (keyup)="0">
 <ul class="list-group" >
-  <!--<ul class="list-group" [dragula]='"sections"'>-->
+  <ul class="list-group" [dragula]='"sections"'>
   <li class="list-group-item" style="cursor: default"
       *ngFor="let section of sections | sectionFilter: filter.value"
       [ngClass]="{active:section.title == activeSection}"
@@ -15,4 +15,5 @@
   >
     {{section.title}}
   </li>
+  </ul>
 </ul>
