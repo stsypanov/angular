@@ -2,6 +2,8 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Http} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import {NotesServerService} from "../service/notes-server-service.service";
+import {Note} from "../entity/Note";
 
 @Component({
   selector: 'app-notes',
@@ -19,12 +21,13 @@ export class NotesComponent implements OnInit, OnChanges {
   @Input()
   section: string;
 
-  constructor(private http: Http) {
+  constructor(private http: Http,
+              private noteService: NotesServerService) {
   }
 
   add() {
 
-    let note = { text: this.text, section: this.section };
+    let note = {text: this.text, section: this.section};
 
     // let reqHeaders = new Headers();
     // reqHeaders.append("Origin", "localhost:3000");
@@ -32,8 +35,7 @@ export class NotesComponent implements OnInit, OnChanges {
     this.http
       .post(this.notesUrl, note)
       .toPromise()
-      .then(resp =>
-        {
+      .then(resp => {
           this.notes.push(note);
           this.text = "";
         }
@@ -44,29 +46,15 @@ export class NotesComponent implements OnInit, OnChanges {
     this.notes.splice(idx, 1);
   }
 
-  getNotes(): Promise<Note[]> {
-    return this.http
-      .get(this.notesUrl + '?section=' + this.section)
-      .toPromise()
-      .then(response => response.json() as Note[]);
-  }
-
   ngOnInit() {
   }
 
-  ngOnChanges()
-  {
-    this.getNotes()
-      .then(notes =>
-      {
+  ngOnChanges() {
+    this.noteService.getNotes(this.section)
+      .then(notes => {
         this.notes = notes;
         console.log(notes);
       });
   }
 
-}
-
-interface Note {
-  text: string;
-  section: string;
 }

@@ -8,21 +8,38 @@ import {HttpModule} from '@angular/http';
 import {SectionsComponent} from './sections/sections.component';
 import {SectionFilterPipe} from "./sections/section.filter.pipe";
 import {DragulaModule, DragulaService} from "ng2-dragula";
+import {RouterModule, Routes} from "@angular/router";
+import { NotesEditorComponent } from './notes-editor/notes-editor.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ViewSectionComponent } from './view-section/view-section.component';
+import {NotesServerService} from "./service/notes-server-service.service";
+
+const appRoutes: Routes = [
+  { path: '', component: NotesEditorComponent },
+  { path: 'viewSection/:name', component: ViewSectionComponent },
+
+  /*must be the last one*/
+  { path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     NotesComponent,
     SectionsComponent,
-    SectionFilterPipe
+    SectionFilterPipe,
+    NotesEditorComponent,
+    PageNotFoundComponent,
+    ViewSectionComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    DragulaModule
+    DragulaModule,
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [DragulaService],
+  providers: [DragulaService, NotesServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
