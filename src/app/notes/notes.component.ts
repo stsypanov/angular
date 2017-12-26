@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Http} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -21,6 +21,9 @@ export class NotesComponent implements OnInit, OnChanges {
   @Input()
   section: string;
 
+  @Output()
+  textChanged: EventEmitter<string> = new EventEmitter<string>();
+
   constructor(private http: Http,
               private noteService: NotesServerService) {
   }
@@ -38,6 +41,7 @@ export class NotesComponent implements OnInit, OnChanges {
       .then(resp => {
           this.notes.push(note);
           this.text = "";
+          this.textChanged.emit(undefined);
         }
       );
   }
@@ -57,4 +61,7 @@ export class NotesComponent implements OnInit, OnChanges {
       });
   }
 
+  updateNoteText() {
+    this.textChanged.emit(this.text);
+  }
 }

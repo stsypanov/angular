@@ -6,7 +6,7 @@
 
   <div class="panel-body">
     <div class="form-group">
-      <textarea style="min-width:100%;min-height:200px" class="form-control" [(ngModel)]="text"></textarea>
+      <textarea style="min-width:100%;min-height:200px" class="form-control" (keyup)="updateNoteText()" [(ngModel)]="text"></textarea>
     </div>
     <button (click)="add()" class="btn btn-primary">Post note</button>
   </div>

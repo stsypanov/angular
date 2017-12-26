@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {DragulaService} from "ng2-dragula";
@@ -22,6 +22,13 @@ export class SectionsComponent implements OnInit {
   sectionChanged: EventEmitter<string> =
     new EventEmitter<string>();
 
+  @Input()
+  set section(section: string) {
+    if (section && section.length > 0) {
+      this.activeSection = section;
+    }
+  }
+
   constructor(private http: Http, private dragulaService: DragulaService) {
   }
 
@@ -44,8 +51,7 @@ export class SectionsComponent implements OnInit {
   }
 
   showSection(section: Section) {
-    this.activeSection = section.title;
-    this.sectionChanged.emit(this.activeSection);
+    this.sectionChanged.emit(section.title);
   }
 
   readSections() {

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-notes-editor',
@@ -8,15 +9,26 @@ import {Component, OnInit} from '@angular/core';
 export class NotesEditorComponent implements OnInit {
 
   section: string;
+  noteText: string;
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.params
+      .map(params => params["name"])
+      .subscribe(section => this.section = section);
   }
 
   setSection(section: string) {
-    this.section = section;
+    this.router.navigate([section]);
   }
 
   ngOnInit() {
   }
 
+  setNoteText(noteText: string) {
+    this.noteText = noteText;
+  }
+
+  public getNoteText(): string {
+    return this.noteText;
+  }
 }
