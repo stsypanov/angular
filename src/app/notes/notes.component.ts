@@ -12,7 +12,7 @@ import {Note} from "../entity/Note";
 })
 export class NotesComponent implements OnInit, OnChanges {
 
-  private notesUrl = 'http://localhost:8080/notes';
+  notesUrl = 'http://localhost:8080/notes';
 
   text: string;
 
@@ -41,13 +41,9 @@ export class NotesComponent implements OnInit, OnChanges {
       .then(resp => {
           this.notes.push(note);
           this.text = "";
-          this.textChanged.emit(undefined);
+          this.updateNoteText(undefined);
         }
       );
-  }
-
-  remove(idx) {
-    this.notes.splice(idx, 1);
   }
 
   ngOnInit() {
@@ -61,7 +57,7 @@ export class NotesComponent implements OnInit, OnChanges {
       });
   }
 
-  updateNoteText() {
-    this.textChanged.emit(this.text);
+  updateNoteText(text = this.text) {
+    this.textChanged.emit(text);
   }
 }
