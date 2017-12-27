@@ -14,11 +14,15 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {ViewSectionComponent} from './view-section/view-section.component';
 import {NotesServerService} from "./service/notes-server-service.service";
 import {CanDeactivateNote} from "./service/can-deactivate-note.service";
+import { UserFormComponent } from './user-form/user-form.component';
+import { EqualToValidatorDirective } from './directive/equal-to-validator.directive';
+import { UserUniqueValidator } from './directive/user-unique-validator.directive';
 
 const appRoutes: Routes = [
+  {path: 'register', component: UserFormComponent},
   {path: '', component: NotesEditorComponent, canDeactivate: [CanDeactivateNote]},
-  {path: 'viewSection/:name', component: ViewSectionComponent},
   {path: ':name', component: NotesEditorComponent, canDeactivate: [CanDeactivateNote]},
+  {path: 'viewSection/:name', component: ViewSectionComponent},
 
   /*must be the last one*/
   {path: '**', component: PageNotFoundComponent}
@@ -32,7 +36,10 @@ const appRoutes: Routes = [
     SectionFilterPipe,
     NotesEditorComponent,
     PageNotFoundComponent,
-    ViewSectionComponent
+    ViewSectionComponent,
+    UserFormComponent,
+    EqualToValidatorDirective,
+    UserUniqueValidator
   ],
   imports: [
     BrowserModule,
