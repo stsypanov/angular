@@ -62,7 +62,7 @@
                  #name="ngModel" [(ngModel)]="user.email">
         </div>
 
-        <button type="submit" [disabled]="!userForm.valid" class="btn btn-primary">Submit</button>
+        <button type="submit" [disabled]="!userForm.valid" (submit)="onSubmit()" class="btn btn-primary">Submit</button>
 
       </form>
     </div>
